@@ -1,0 +1,234 @@
+
+/* mihalis alexakos 3200003
+stefanos dimitrakopoulos 3130054 */
+
+:root {
+    --accent: rgb(182, 195, 231);
+    --accent2:rgb(196, 209, 245);
+    --dark-accent: rgb(75, 99, 164);
+    --dark-accent2: rgb(153, 168, 209);
+    --main: rgb(239, 239, 239);
+    --text: rgb(34, 30, 46);
+}
+
+* {
+    font-family: system-ui, -apple-system;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+
+}
+
+body {
+    background-color: var(--main);
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin: 50px;
+}
+
+.index-categ-container {
+    padding: 15px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    width: fit-content;
+}
+
+.index-categ-wrapper {
+    color: var(--text);
+    width: 200px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--accent);
+    cursor: pointer;
+}
+
+.index-categ-wrapper:active {
+    transform: scale(0.95);
+}
+
+.index-categ-wrapper>img {
+    width: 200px;
+    height: 160px;
+    border-radius: 5px;
+}
+
+.index-title {
+    text-align: center;
+    padding: 15px;
+    padding-bottom: 0px;
+    color: var(--text);
+}
+
+.index-wrapper { 
+    align-items: center;
+    justify-content: center;
+}
+
+.index-subcateg-container {
+    padding-left: 15px;
+    grid-row-gap: 15px;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.index-subcateg-wrapper {
+    color: var(--text);
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--accent);
+    cursor: pointer;
+}
+
+.index-subcateg-wrapper:active {
+    transform: scale(0.95);
+}
+
+.categ-container {
+    padding: 15px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 40px;
+    background-color: var(--accent);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.back-button:active{
+    transform: scale(0.9);
+}
+
+.back-button:hover{
+    background-color: var(--dark-accent2);
+}
+
+.index-subcateg-container-of-containers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: fit-content;
+}
+
+.categ-wrapper {
+    color: var(--text);
+    width: 500px;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--accent);
+    cursor: pointer;
+}
+
+.image-wrapper img{
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+}
+
+.gallery {
+    width: 500px;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.categ-table{
+    width:100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--accent2);
+}
+
+.fav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    margin-left: 0px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--dark-accent);
+    background-color: var(--accent);
+    color: var(--dark-accent);
+}
+
+.fav-button svg {
+    margin-right: 5px; 
+    fill: var(--dark-accent);
+}
+
+.log-in-form {
+    width: 250px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    color: var(--dark-accent);
+}
+
+#login-form-container{
+    color: var(--dark-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    padding: 0px;
+    margin: 0px;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    border: 2px solid var(--accent)
+}
+
+button {
+    padding: 10px;
+    background-color: var(--accent);
+    color: var(--text);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--dark-accent2);
+}
+
+#login-error {
+    color: #b10c0c;
+    margin-top: 10px;
+}
+
+.nav-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}

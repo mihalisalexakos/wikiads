@@ -1,0 +1,115 @@
+
+<!-- mihalis alexakos 3200003
+stefanos dimitrakopoulos 3130054 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="server.js"></script>
+  <title>Κατηγορία</title>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta2/css/all.css" integrity="sha384-..."
+    crossorigin="anonymous" />
+</head>
+
+<body>
+
+
+  <div class="index-wrapper">
+    <h1 class="index-title">Wiki Ads</h1>
+    <div class="categ-container" id="ads-container"></div>
+
+    <script id="ad-template" type="text/x-handlebars-template">
+
+
+      {{#if ads.length}} <!-- Check if there are ads in the dataset -->
+        <a href="index.html" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" 
+          viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, 
+          Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 
+          0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+        </a>
+        {{#each ads}}
+          <div class="categ-wrapper">
+            <h3>{{this.title}}</h3>
+            <p>{{this.description}}</p>
+            <br>
+            <table class="categ-table">
+              <tbody>
+                {{#each (splitFeatures features)}}
+                  {{#if this}}
+                    <tr>
+                      <td>{{getFeatureKey this}}</td>
+                      <td>{{getFeatureValue this}}</td>
+                    </tr>
+                  {{/if}}
+                {{/each}}
+              </tbody>
+            </table>
+            <br>
+            <p style="color: rgb(83, 86, 137)">ID: {{this.id}}</p>
+
+            <div class="gallery">
+              {{#each this.images}}
+                <div class="image-wrapper">
+                  <img class="ad-image" src="https://wiki-ads.onrender.com/{{this}}" alt="{{this.title}}">  
+                </div>  
+              {{/each}}
+            </div>
+            <br>
+            <h3>{{this.cost}} €</h3>
+          </div>
+        {{/each}}
+
+        {{else}}
+          <p>Δεν υπάρχουν αγγελίες αυτη τη στιγμή!</p>
+      {{/if}}
+
+
+
+    </div>
+    </script>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script>
+    // Κλήση WikiAds API για Αγγελίες Κατηγορίας:
+    const categoryId = new URLSearchParams(window.location.search).get("id");
+    console.log("id: ", categoryId);
+
+    let apiUrl = `https://wiki-ads.onrender.com/ads?subcategory=${categoryId}`;
+    console.log("link: ", apiUrl)
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(adsData => {
+        console.log(adsData);
+        // Χρήση του προτύπου Handlebars για την εμφάνιση των αγγελιών
+        Handlebars.registerHelper('splitFeatures', function(features) {
+          return features ? features.split(';') : [];
+        });
+
+        Handlebars.registerHelper('getFeatureKey', function(feature) {
+          return feature.split(':')[0];
+        });
+
+        Handlebars.registerHelper('getFeatureValue', function(feature) {
+          return feature.split(':')[1];
+        });
+        const source = document.getElementById("ad-template").innerHTML;
+        const template = Handlebars.compile(source);
+        const html = template({ ads: adsData });
+
+        // Εμφάνιση του HTML στο στοιχείο με id "ads-container"
+        document.getElementById("ads-container").innerHTML = html;
+      })
+      .catch(error => console.error('Error fetching ads:', error));
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+
+<!-- mihalis alexakos 3200003
+stefanos dimitrakopoulos 3130054 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Αρχική</title>
+</head>
+
+<body>
+    <div class="index-wrapper">
+        <h1 class="index-title">Wiki Ads</h1>
+        <div class="index-categ-container" id="categ-container"></div>
+
+        <script id="categories-template" type="text/x-handlebars-template">
+            {{#each categories}}
+            <a href="category.html?id={{id}}">
+                <div class="index-categ-wrapper">
+                    <img src="https://wiki-ads.onrender.com/{{this.img_url}}" alt="{{this.title}}">  
+                    <p><b>{{this.title}}</b></p>              
+                </div>
+            </a>  
+            {{/each}}
+        </script>
+
+
+
+
+        <div class="index-subcateg-container-of-containers">
+
+
+            <div>
+                <div class="index-subcateg-container" id="subcateg-container-1"></div>
+                <script id="subcateg-template-1" type="text/x-handlebars-template">
+                    {{#each categories}}
+                        <a href="subcategory.html?id={{id}}">
+                            <div class="index-subcateg-wrapper"> 
+                                <p><b>{{this.title}}</b></p>              
+                            </div>
+                        </a>  
+                    {{/each}}
+                </script>
+            </div> 
+
+
+            <div>
+                <div class="index-subcateg-container" id="subcateg-container-2"></div>
+                <script id="subcateg-template-2" type="text/x-handlebars-template">
+                    {{#each categories}}
+                        <a href="subcategory.html?id={{id}}">
+                            <div class="index-subcateg-wrapper"> 
+                                <p><b>{{this.title}}</b></p>              
+                            </div>
+                        </a>  
+                    {{/each}}
+                </script>
+            </div>
+
+
+            <div>
+                <div class="index-subcateg-container" id="subcateg-container-3"></div>
+                <script id="subcateg-template-3" type="text/x-handlebars-template">
+                    {{#each categories}}
+                        <a href="subcategory.html?id={{id}}">
+                            <div class="index-subcateg-wrapper"> 
+                                <p><b>{{this.title}}</b></p>              
+                            </div>
+                        </a>  
+                    {{/each}}
+                </script>
+            </div>
+
+
+            <div>
+                <div class="index-subcateg-container" id="subcateg-container-4"></div>
+                <script id="subcateg-template-4" type="text/x-handlebars-template">
+                    {{#each categories}}
+                        <a href="subcategory.html?id={{id}}">
+                            <div class="index-subcateg-wrapper"> 
+                                <p><b>{{this.title}}</b></p>              
+                            </div>
+                        </a>  
+                    {{/each}}
+                </script>
+            </div>
+        </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="index.js"></script>
+   
+</body>
+
+</html>

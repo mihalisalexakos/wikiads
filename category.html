@@ -1,0 +1,159 @@
+
+<!-- mihalis alexakos 3200003
+stefanos dimitrakopoulos 3130054 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>Κατηγορία</title>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta2/css/all.css" integrity="sha384-..."
+    crossorigin="anonymous" />
+</head>
+
+<body>
+
+
+  <!-- log in section -->
+  <div class="log-in-form" id="login-form-container">
+    <form id="loginForm" method="POST" action="http://localhost:3000/login">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit"><b>Login</b></button>
+    </form>
+
+    <p id="login-error"></p>
+
+  </div>
+
+  <div class="index-wrapper">
+
+    <h1 class="index-title">Wiki Ads</h1>
+    <div class="categ-container" id="ads-container"></div>
+
+    <script id="ad-template" type="text/x-handlebars-template">
+
+
+      <!-- if statements checks if there are any ads to display -->
+      {{#if ads.length}}
+
+        <div class="nav-buttons">
+          <a href="index.html" class="back-button" id="category-link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" 
+            viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, 
+            Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 
+            0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+          </a>
+          
+          <!-- triggers function in Login.js, opens favorite-ads.html in new page if user is logged in -->
+          <a href="#" onclick="openFavoritesPage();" class="back-button" id="fav-page">
+            <svg xmlns="http://www.w3.org/2000/svg" height="25" width="15" viewBox="0 0 512 512">
+              <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5 -124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+            </svg>
+          </a>
+        </div>
+        {{#each ads}}
+              <div class="categ-wrapper">
+
+                <h3>{{this.title}}</h3>
+
+                <p>{{this.description}}</p>
+                <br>
+                <table class="categ-table">
+                  <tbody>
+                    {{#each (splitFeatures features)}}
+                      {{#if this}}
+                        <tr>
+                          <td>{{getFeatureKey this}}</td>
+                          <td>{{getFeatureValue this}}</td>
+                        </tr>
+                      {{/if}}
+                    {{/each}}
+                  </tbody>
+                </table>
+                <br>
+
+                <div class="gallery">
+                  {{#each this.images}}
+                    <div class="image-wrapper">
+                      <img class="ad-image" src="https://wiki-ads.onrender.com/{{this}}" alt="{{this.title}}">  
+                    </div>  
+                  {{/each}}
+                </div>
+                <br>
+                <h3>{{this.cost}}€ </h3>
+                <button class="add-to-favorites-btn fav-button" onclick="addToFavorites('{{{this.id}}}','{{{this.cost}}}','{{{this.title}}}','{{{this.description}}}','{{{this.images}}}')">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                    <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5 -124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+                  </svg>  Προσθήκη στα Αγαπημένα
+                </button>
+              </div>
+        {{/each}}
+
+      {{else}}
+        <!-- this message is displayed instead -->
+        <p>Δεν υπάρχουν αγγελίες αυτη τη στιγμή!</p>
+      {{/if}}
+
+    </div>
+    </script>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+
+  <script>
+    const categoryId = new URLSearchParams(window.location.search).get("id");
+    console.log("id: ", categoryId);
+
+    let apiUrl = `https://wiki-ads.onrender.com/ads?category=${categoryId}`;
+    console.log("link: ", apiUrl);
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(adsData => {
+        console.log(adsData);
+
+        // DEBUG! description of cars included " characters that messed up the calling of the AddToFavorites function
+        // Removes single and double quotes from description
+        adsData.forEach(ad => {
+          if (ad.description) {
+            ad.description = ad.description.replace(/['"]/g, '');
+          }
+        });
+
+        Handlebars.registerHelper('splitFeatures', function (features) {
+          return features ? features.split(';') : [];
+        });
+
+        Handlebars.registerHelper('getFeatureKey', function (feature) {
+          return feature.split(':')[0];
+        });
+
+        Handlebars.registerHelper('getFeatureValue', function (feature) {
+          return feature.split(':')[1];
+        });
+
+        const source = document.getElementById("ad-template").innerHTML;
+        const template = Handlebars.compile(source);
+        const html = template({ ads: adsData });
+
+        document.getElementById("ads-container").innerHTML = html;
+      })
+      .catch(error => console.error('Error fetching ads:', error));
+  </script>
+
+  <script src="Login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+
+<!-- mihalis alexakos 3200003
+stefanos dimitrakopoulos 3130054 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Αγαπημένες Αγγελίες</title>
+</head>
+
+<body>
+  <h1 class="index-title">Wiki Ads</h1>
+  <h2 class="index-title">Aγαπημένες Αγγελίες</h2>    
+  <!-- div shows only when there are no favorite ads to display -->
+  <div class="no-favorites-container" id="no-favorites-container">
+    
+
+    <br>
+    <br>
+    <p>Δεν έχεις προσθέσει αγγελίες στην λίστα αγαπημένων σου!</p>
+  </div>
+
+  <!-- div shows up when there IS favorite ads to display -->
+  <div class="index-wrapper" id="index-wrapper">
+
+      <br>
+
+      <div class="categ-container" id="favorites-container"></div>
+
+      <script id="favorites-template" type="text/x-handlebars-template">
+          {{#each favorites}}
+          
+              <div class="categ-wrapper">
+                  <br>
+                  <p><b>{{this.title}}</b></p>
+                  <br>
+                  <p>{{this.description}}</p>
+                  <br>
+                  <div class="image-wrapper">
+                    <img src="https://wiki-ads.onrender.com/{{this.imageUrl}}" alt="{{this.title}}">
+                  </div>  
+                  <br>                    
+                  <h3>{{this.cost}}€</h3>
+                  <br>
+              </div>
+          {{/each}}
+      </script>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="Login.js"></script>
+  
+<script>
+  function renderFavoritesTemplate() {
+    const favoritesData = window.favoritesData || [];
+
+    // Checks if favoritesData is empty
+    if (favoritesData.length === 0) {
+      // If it's empty, hides the index-wrapper and show no-favorites-container
+      document.getElementById('index-wrapper').style.display = 'none';
+      document.getElementById('no-favorites-container').style.display = 'block';
+    } else {
+      // If it's not empty, shows the index-wrapper and hides the no-favorites-container
+      document.getElementById('index-wrapper').style.display = 'block';
+      document.getElementById('no-favorites-container').style.display = 'none';
+
+      // Modifies imageUrl
+      favoritesData.forEach(item => {
+        const imageUrlArray = item.imageUrl.split(',');
+        const modifiedArray = imageUrlArray.slice(0, 1);
+        item.imageUrl = modifiedArray.join(',');
+      });
+
+      const favoritesTemplateScript = document.getElementById('favorites-template').innerHTML;
+      const favoritesTemplate = Handlebars.compile(favoritesTemplateScript);
+
+      document.getElementById('favorites-container').innerHTML = favoritesTemplate({ favorites: favoritesData });
+    }
+  }
+
+  OpenFavorites();
+</script>
+
+    
+    </body>
+    
+    </html>
